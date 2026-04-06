@@ -23,6 +23,7 @@ create table recette(
     create_time timestamp NOT NULL DEFAULT current_timestamp(),
     temp_de_production varchar(100),
     ingredient varchar(255),
+    instructions varchar(255),
     portions varchar(100),
     foreign key (users_id)references users(id) on delete cascade,
     foreign key (categories_id)references categories(id) on delete cascade
