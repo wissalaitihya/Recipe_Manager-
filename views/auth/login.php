@@ -1,3 +1,8 @@
+<?php
+require_once __DIR__ . '/../../controllers/AuthController.php';
+$authController = new AuthController();
+$authController->handleLogin();
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -26,7 +31,7 @@
         </div>
       <?php endif; ?>
 
-      <form action="auth/login_handler.php" method="POST">
+      <form action="login.php" method="POST">
         <div class="form-group">
           <label class="form-label" for="email">Email</label>
           <input 
