@@ -1,0 +1,258 @@
+<?php
+// session_start();
+// Redirect to login if not authenticated
+// if (!isset($_SESSION['user_id'])) {
+//     header('Location: login.php');
+//     exit;
+// }
+
+// Example user data (replace with session data)
+$user_name = "Utilisateur"; // $_SESSION['user_name']
+
+// Example categories
+$categories = [
+    ['id' => 1, 'name' => 'Entrees'],
+    ['id' => 2, 'name' => 'Plats'],
+    ['id' => 3, 'name' => 'Desserts'],
+    ['id' => 4, 'name' => 'Boissons'],
+];
+
+// Example recipes (replace with database query)
+$recipes = [
+    [
+        'id' => 1,
+        'title' => 'Tajine de Poulet aux Olives',
+        'description' => 'Un classique de la cuisine marocaine avec des olives et du citron confit.',
+        'prep_time' => 45,
+        'portions' => 4,
+        'category_id' => 2,
+        'category_name' => 'Plats',
+        'created_at' => '2024-01-15',
+    ],
+    [
+        'id' => 2,
+        'title' => 'Harira',
+        'description' => 'Soupe traditionnelle aux tomates, lentilles et pois chiches.',
+        'prep_time' => 60,
+        'portions' => 6,
+        'category_id' => 1,
+        'category_name' => 'Entrees',
+        'created_at' => '2024-01-10',
+    ],
+    [
+        'id' => 3,
+        'title' => 'Cornes de Gazelle',
+        'description' => 'Patisserie en forme de croissant fourree aux amandes.',
+        'prep_time' => 90,
+        'portions' => 20,
+        'category_id' => 3,
+        'category_name' => 'Desserts',
+        'created_at' => '2024-01-08',
+    ],
+];
+
+// Filter by category if set
+$filter_category = isset($_GET['category']) ? (int)$_GET['category'] : null;
+if ($filter_category) {
+    $recipes = array_filter($recipes, fn($r) => $r['category_id'] === $filter_category);
+}
+?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mes Recettes - Marrakech Food Lovers</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">Marrakech Food Lovers</div>
+      <div class="user-info">
+        <span class="user-name"><?php echo htmlspecialchars($user_name); ?></span>
+        <a href="auth/logout.php" class="btn btn-ghost btn-sm">Deconnexion</a>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <!-- Recipes Header -->
+      <div class="recipes-header">
+        <h1 class="recipes-title">Mes Recettes</h1>
+        <button class="btn btn-primary" onclick="openModal('add')">
+          + Nouvelle Recette
+        </button>
+      </div>
+
+      <!-- Category Filter -->
+      <div class="category-filter">
+        <a href="dashboard.php" class="category-btn <?php echo !$filter_category ? 'active' : ''; ?>">
+          Toutes
+        </a>
+        <?php foreach ($categories as $cat): ?>
+          <a 
+            href="dashboard.php?category=<?php echo $cat['id']; ?>" 
+            class="category-btn <?php echo $filter_category === $cat['id'] ? 'active' : ''; ?>"
+          >
+            <?php echo htmlspecialchars($cat['name']); ?>
+          </a>
+        <?php endforeach; ?>
+      </div>
+
+      <!-- Recipes Grid -->
+      <?php if (empty($recipes)): ?>
+        <div class="empty-state">
+          <div class="empty-state-icon">&#127858;</div>
+          <p class="empty-state-text">Aucune recette trouvee. Ajoutez votre premiere recette!</p>
+        </div>
+      <?php else: ?>
+        <div class="recipes-grid">
+          <?php foreach ($recipes as $recipe): ?>
+            <div class="recipe-card">
+              <div class="recipe-card-header">
+                <h3 class="recipe-title"><?php echo htmlspecialchars($recipe['title']); ?></h3>
+                <span class="recipe-category"><?php echo htmlspecialchars($recipe['category_name']); ?></span>
+              </div>
+              <div class="recipe-meta">
+                <span><?php echo $recipe['prep_time']; ?> min</span>
+                <span><?php echo $recipe['portions']; ?> portions</span>
+              </div>
+              <p class="recipe-description"><?php echo htmlspecialchars($recipe['description']); ?></p>
+              <div class="recipe-actions">
+                <button class="btn btn-secondary btn-sm" onclick="openModal('edit', <?php echo htmlspecialchars(json_encode($recipe)); ?>)">
+                  Modifier
+                </button>
+                <button class="btn btn-ghost btn-sm" onclick="openModal('delete', <?php echo $recipe['id']; ?>)">
+                  Supprimer
+                </button>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+      <?php endif; ?>
+    </main>
+  </div>
+
+  <!-- Add/Edit Recipe Modal -->
+  <div class="modal-overlay" id="recipeModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">Nouvelle Recette</h2>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <form action="recipes/save.php" method="POST">
+        <input type="hidden" name="id" id="recipeId">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="title">Titre</label>
+            <input type="text" id="title" name="title" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="category">Categorie</label>
+            <select id="category" name="category_id" class="form-select" required>
+              <?php foreach ($categories as $cat): ?>
+                <option value="<?php echo $cat['id']; ?>"><?php echo htmlspecialchars($cat['name']); ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label" for="prep_time">Temps (min)</label>
+              <input type="number" id="prep_time" name="prep_time" class="form-input" min="1" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="portions">Portions</label>
+              <input type="number" id="portions" name="portions" class="form-input" min="1" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="description">Description</label>
+            <textarea id="description" name="description" class="form-textarea" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ingredients">Ingredients</label>
+            <textarea id="ingredients" name="ingredients" class="form-textarea" rows="4" placeholder="Un ingredient par ligne"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="instructions">Instructions</label>
+            <textarea id="instructions" name="instructions" class="form-textarea" rows="4" placeholder="Les etapes de preparation"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal()">Annuler</button>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal" style="max-width: 400px;">
+      <div class="modal-header">
+        <h2 class="modal-title">Supprimer la recette</h2>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Etes-vous sur de vouloir supprimer cette recette ? Cette action est irreversible.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal()">Annuler</button>
+        <form action="recipes/delete.php" method="POST" style="display: inline;">
+          <input type="hidden" name="id" id="deleteRecipeId">
+          <button type="submit" class="btn btn-destructive">Supprimer</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openModal(type, data = null) {
+      if (type === 'delete') {
+        document.getElementById('deleteRecipeId').value = data;
+        document.getElementById('deleteModal').classList.add('active');
+      } else {
+        const modal = document.getElementById('recipeModal');
+        const title = document.getElementById('modalTitle');
+        
+        if (type === 'edit' && data) {
+          title.textContent = 'Modifier la Recette';
+          document.getElementById('recipeId').value = data.id;
+          document.getElementById('title').value = data.title;
+          document.getElementById('category').value = data.category_id;
+          document.getElementById('prep_time').value = data.prep_time;
+          document.getElementById('portions').value = data.portions;
+          document.getElementById('description').value = data.description || '';
+          document.getElementById('ingredients').value = data.ingredients || '';
+          document.getElementById('instructions').value = data.instructions || '';
+        } else {
+          title.textContent = 'Nouvelle Recette';
+          document.getElementById('recipeId').value = '';
+          document.querySelector('#recipeModal form').reset();
+        }
+        
+        modal.classList.add('active');
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('recipeModal').classList.remove('active');
+      document.getElementById('deleteModal').classList.remove('active');
+    }
+
+    // Close modal on overlay click
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeModal();
+      });
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+</body>
+</html>
