@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -14,13 +15,14 @@
         <p class="auth-subtitle">Creez votre compte pour partager vos recettes</p>
       </div>
 
-      <?php if (isset($_GET['error'])): ?>
+      <?php if (isset($_SESSION['error'])): ?>
         <div class="alert alert-error">
-          <?php echo htmlspecialchars($_GET['error']); ?>
+          <?php echo htmlspecialchars($_SESSION['error']); ?>
+          <?php unset($_SESSION['error']); ?>
         </div>
       <?php endif; ?>
 
-      <form action="auth/register_handler.php" method="POST">
+      <form action="auth/register.php" method="POST">
         <div class="form-group">
           <label class="form-label" for="name">Nom complet</label>
           <input 

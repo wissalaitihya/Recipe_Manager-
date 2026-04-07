@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -14,19 +15,22 @@
         <p class="auth-subtitle">Connectez-vous pour acceder a vos recettes</p>
       </div>
 
-      <?php if (isset($_GET['error'])): ?>
+
+      <?php if (isset($_SESSION['error'])): ?>
         <div class="alert alert-error">
-          <?php echo htmlspecialchars($_GET['error']); ?>
+          <?php echo htmlspecialchars($_SESSION['error']); ?>
+          <?php unset($_SESSION['error']); ?>
         </div>
       <?php endif; ?>
-
-      <?php if (isset($_GET['success'])): ?>
+      
+      <?php if (isset($_SESSION['success'])): ?>
         <div class="alert alert-success">
-          <?php echo htmlspecialchars($_GET['success']); ?>
+          <?php echo htmlspecialchars($_SESSION['success']); ?> 
+          <?php unset($_SESSION['success']); ?>
         </div>
       <?php endif; ?>
 
-      <form action="auth/login_handler.php" method="POST">
+      <form action="auth/login.php" method="POST">
         <div class="form-group">
           <label class="form-label" for="email">Email</label>
           <input 
