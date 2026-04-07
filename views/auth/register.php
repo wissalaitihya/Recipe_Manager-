@@ -1,3 +1,8 @@
+<?php
+require_once __DIR__ . '/../../controllers/AuthController.php';
+$authController = new AuthController();
+$authController->handleRegister();
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -20,7 +25,7 @@
         </div>
       <?php endif; ?>
 
-      <form action="auth/register_handler.php" method="POST">
+      <form action="register.php" method="POST">
         <div class="form-group">
           <label class="form-label" for="name">Nom complet</label>
           <input 
