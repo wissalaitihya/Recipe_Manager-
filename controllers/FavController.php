@@ -18,7 +18,7 @@ $favoriteModel = new Favorite_model();
 if ($favoriteModel->isFavorite($user_id, $recette_id)) {
     //  already favorite remove it
     $favoriteModel->removeFavorite($user_id, $recette_id);
-    header("Location: ../views/recipes/dashboard.php");
+    header("Location: ../views/recipes/favorites.php");
 } else {
     // not favorite add it
     $favoriteModel->addFavorite($user_id, $recette_id);
