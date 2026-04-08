@@ -40,7 +40,7 @@ class Recette_model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getRecipesByUser($user_id, $category_id = null)
+    public function getRecipesByUser($user_id, $category_id = null, $search = null)
     {
         $sql = "SELECT r.*, c.name as category_name 
                 FROM recette r 
@@ -52,7 +52,11 @@ class Recette_model
             $sql .= " AND r.categories_id = ?";
             $params[] = $category_id;
         }
-
+        if ($search) {
+        $sql .= " AND (r.title LIKE ? OR r.ingredient LIKE ?)";
+        $params[] = '%' . $search . '%';
+        $params[] = '%' . $search . '%';
+    }
         $sql .= " ORDER BY r.create_time DESC";
 
         $stmt = $this->pdo->prepare($sql);
