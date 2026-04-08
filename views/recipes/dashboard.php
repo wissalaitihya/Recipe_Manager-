@@ -1,5 +1,5 @@
 <?php
-session_start();
+include_once __DIR__ . '/../includes/headre.php';
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../auth/login.php");
     exit();
@@ -16,6 +16,9 @@ $filter_category = isset($_GET['category']) ? $_GET['category'] : null;
 $search = isset($_GET["search"]) ? $_GET["search"] : null;
 $recipes = $recipeModel->getRecipesByUser($_SESSION['user_id'], $filter_category, $search);
 $user_name = $_SESSION['user_name'] ?? 'Utilisateur';
+
+require_once __DIR__ . '/../../models/favorites.php';
+$favoriteModel = new Favorite_model();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -29,15 +32,7 @@ $user_name = $_SESSION['user_name'] ?? 'Utilisateur';
 
 <body>
     <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="logo">Marrakech Food Lovers</div>
-            <div class="user-info">
-                <span class="user-name"><?php echo htmlspecialchars($user_name); ?></span>
-                <a href="../../controllers/AuthController.php?action=logout"
-                    class="btn btn-ghost btn-sm">Deconnexion</a>
-            </div>
-        </header>
+
 
         <!-- Main Content -->
         <main>
@@ -97,6 +92,11 @@ $user_name = $_SESSION['user_name'] ?? 'Utilisateur';
                             </div>
                             <p class="recipe-description"><?php echo htmlspecialchars($recipe['ingredient'] ?? ''); ?></p>
                             <div class="recipe-actions">
+
+                                <a href="../../controllers/FavController.php?id=<?php echo $recipe['id']; ?>"
+                                    class="btn btn-sm <?php echo $favoriteModel->isFavorite($_SESSION['user_id'], $recipe['id']) ? 'btn-primary' : 'btn-ghost'; ?>">
+                                    <?php echo $favoriteModel->isFavorite($_SESSION['user_id'], $recipe['id']) ? '❤️ Favori' : '🤍 Favori'; ?>
+                                </a>
                                 <button class="btn btn-secondary btn-sm"
                                     onclick="openModal('edit', <?php echo htmlspecialchars(json_encode($recipe)); ?>)">
                                     Modifier
