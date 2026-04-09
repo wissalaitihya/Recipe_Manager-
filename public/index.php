@@ -1,5 +1,5 @@
 <?php
-define('BASE_URL', '/recipe-manager/public');
+define('BASE_URL', str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])));
 
 require_once __DIR__ . '/../core/routes.php';
 

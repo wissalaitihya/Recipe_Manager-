@@ -1,15 +1,10 @@
-<?php
-require_once __DIR__ . '/../../controllers/AuthController.php';
-$authController = new AuthController();
-$authController->handleRegister();
-?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inscription - Marrakech Food Lovers</title>
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>/../views/css/style.css">
 </head>
 <body>
   <div class="auth-container">
@@ -26,7 +21,7 @@ $authController->handleRegister();
         </div>
       <?php endif; ?>
 
-      <form action="register.php" method="POST">
+      <form action="<?php echo BASE_URL; ?>/auth/handleRegister" method="POST">
         <div class="form-group">
           <label class="form-label" for="name">Nom complet</label>
           <input 
@@ -83,7 +78,7 @@ $authController->handleRegister();
       </form>
 
       <p class="auth-link">
-        Deja un compte ? <a href="login.php">Connectez-vous</a>
+        Deja un compte ? <a href="<?php echo BASE_URL; ?>/auth/login">Connectez-vous</a>
       </p>
     </div>
   </div>

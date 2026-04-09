@@ -212,13 +212,13 @@ footer{
 <body>
 
 <header>
-  <a href="home.php" class="logo">Recettes Communautaires</a>
+  <a href="<?php echo BASE_URL; ?>/recipe/home" class="logo">Recettes Communautaires</a>
   <div class="nav">
     <?php if ($is_logged_in): ?>
-      <a href="dashboard.php" class="btn">Mon Espace</a>
+      <a href="<?php echo BASE_URL; ?>/recipe/dashboard" class="btn">Mon Espace</a>
     <?php else: ?>
-      <a href="../auth/login.php">Connexion</a>
-      <a href="../auth/register.php" class="btn">Inscription</a>
+      <a href="<?php echo BASE_URL; ?>/auth/login">Connexion</a>
+      <a href="<?php echo BASE_URL; ?>/auth/register" class="btn">Inscription</a>
     <?php endif; ?>
   </div>
 </header>
@@ -229,9 +229,9 @@ footer{
 </section>
 
 <div class="category-filter">
-  <a href="home.php#menu" class="category-btn <?php echo !$filter_category ? 'active' : ''; ?>">Toutes</a>
+  <a href="<?php echo BASE_URL; ?>/recipe/home#menu" class="category-btn <?php echo !$filter_category ? 'active' : ''; ?>">Toutes</a>
   <?php foreach ($categories as $cat): ?>
-    <a href="home.php?category=<?php echo $cat['id']; ?>#menu"
+    <a href="<?php echo BASE_URL; ?>/recipe/home?category=<?php echo $cat['id']; ?>#menu"
        class="category-btn <?php echo $filter_category === $cat['id'] ? 'active' : ''; ?>">
        <?php echo htmlspecialchars($cat['name']); ?>
     </a>

@@ -45,7 +45,7 @@ $favoriteModel = new Favorite_model();
             </div>
             <!--search  bar -->
             <div>
-                <form method="GET" action="dashboard.php" class="search-form">
+                <form method="GET" action="<?php echo BASE_URL; ?>/recipe/dashboard" class="search-form">
                     <?php if ($filter_category): ?>
                         <input type="hidden" name="category" value="<?php echo htmlspecialchars($filter_category); ?>">
                     <?php endif; ?>
@@ -54,18 +54,18 @@ $favoriteModel = new Favorite_model();
                         value="<?php echo htmlspecialchars($search ?? ''); ?>">
                     <button type="submit" class="btn btn-primary">Rechercher</button>
                     <?php if ($search): ?>
-                        <a href="dashboard.php<?php echo $filter_category ? '?category=' . $filter_category : ''; ?>"
+                        <a href="<?php echo BASE_URL; ?>/recipe/dashboard<?php echo $filter_category ? '?category=' . $filter_category : ''; ?>"
                             class="btn btn-ghost">Effacer</a>
                     <?php endif; ?>
                 </form>
             </div>
             <!-- Category Filter -->
             <div class="category-filter">
-                <a href="dashboard.php" class="category-btn <?php echo !$filter_category ? 'active' : ''; ?>">
+                <a href="<?php echo BASE_URL; ?>/recipe/dashboard" class="category-btn <?php echo !$filter_category ? 'active' : ''; ?>">
                     Toutes
                 </a>
                 <?php foreach ($categories as $cat): ?>
-                    <a href="dashboard.php?category=<?php echo $cat['id']; ?>"
+                    <a href="<?php echo BASE_URL; ?>/recipe/dashboard?category=<?php echo $cat['id']; ?>"
                         class="category-btn <?php echo $filter_category === $cat['id'] ? 'active' : ''; ?>">
                         <?php echo htmlspecialchars($cat['name']); ?>
                     </a>
@@ -93,7 +93,7 @@ $favoriteModel = new Favorite_model();
                             <p class="recipe-description"><?php echo htmlspecialchars($recipe['ingredient'] ?? ''); ?></p>
                             <div class="recipe-actions">
 
-                                <a href="../../controllers/FavController.php?id=<?php echo $recipe['id']; ?>"
+                                <a href="<?php echo BASE_URL; ?>/recipe/toggleFavorite?id=<?php echo $recipe['id']; ?>"
                                     class="btn btn-sm <?php echo $favoriteModel->isFavorite($_SESSION['user_id'], $recipe['id']) ? 'btn-primary' : 'btn-ghost'; ?>">
                                     <?php echo $favoriteModel->isFavorite($_SESSION['user_id'], $recipe['id']) ? '❤️ Favori' : '🤍 Favori'; ?>
                                 </a>
@@ -120,7 +120,7 @@ $favoriteModel = new Favorite_model();
                 <h2 class="modal-title" id="modalTitle">Nouvelle Recette</h2>
                 <button class="modal-close" onclick="closeModal()">&times;</button>
             </div>
-            <form action="../../controllers/RecipeController.php" method="POST">
+            <form action="<?php echo BASE_URL; ?>/recipe/save" method="POST">
                 <input type="hidden" name="id" id="recipeId">
                 <div class="modal-body">
                     <div class="form-group">
@@ -177,7 +177,7 @@ $favoriteModel = new Favorite_model();
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="closeModal()">Annuler</button>
-                <form action="../../controllers/RecipeController.php" method="POST" style="display: inline;">
+                <form action="<?php echo BASE_URL; ?>/recipe/delete" method="POST" style="display: inline;">
                     <input type="hidden" name="action" value="delete">
                     <input type="hidden" name="id" id="deleteRecipeId">
                     <button type="submit" class="btn btn-destructive">Supprimer</button>

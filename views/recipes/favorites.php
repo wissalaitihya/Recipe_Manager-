@@ -1,7 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) session_start();
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../auth/login.php");
+    header("Location: " . BASE_URL . "/auth/login");
     exit();
 }
 require_once __DIR__ . '/../../models/favorites.php';
@@ -24,7 +24,7 @@ $user_name = $_SESSION['user_name'] ?? 'Utilisateur';
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/../views/css/style.css">
     <style>
         :root {
             /* Restaurant palette */
@@ -309,11 +309,11 @@ $user_name = $_SESSION['user_name'] ?? 'Utilisateur';
 
     <!-- Header -->
     <header class="header-public">
-        <a href="home.php" class="logo">Marrakech Food Lovers</a>
+        <a href="<?php echo BASE_URL; ?>/recipe/home" class="logo">Marrakech Food Lovers</a>
         <div class="user-info">
             <span class="user-name">♦ <?php echo htmlspecialchars($user_name); ?></span>
-            <a href="dashboard.php" class="btn-secondary">← Mes Recettes</a>
-            <a href="../../controllers/AuthController.php?action=logout" class="btn-secondary">Déconnexion</a>
+            <a href="<?php echo BASE_URL; ?>/recipe/dashboard" class="btn-secondary">← Mes Recettes</a>
+            <a href="<?php echo BASE_URL; ?>/auth/handleLogout" class="btn-secondary">Déconnexion</a>
         </div>
     </header>
 
@@ -329,7 +329,7 @@ $user_name = $_SESSION['user_name'] ?? 'Utilisateur';
                 <div class="empty-state-icon">♡</div>
                 <p class="empty-state-text">Aucune recette favorite pour le moment.</p>
                 <p style="color: var(--text-muted); margin-top: 1rem;">
-                    <a href="home.php" style="color: var(--gold); text-decoration: none; font-weight: 500;">Découvrez nos
+                    <a href="<?php echo BASE_URL; ?>/recipe/home" style="color: var(--gold); text-decoration: none; font-weight: 500;">Découvrez nos
                         recettes →</a>
                 </p>
             </div>
@@ -348,7 +348,7 @@ $user_name = $_SESSION['user_name'] ?? 'Utilisateur';
                             <?php echo htmlspecialchars(substr($recipe['ingredient'] ?? 'Recette du chef...', 0, 100)) . '...'; ?>
                         </p>
                         <div class="recipe-actions">
-                            <a href="../../controllers/FavController.php?id=<?php echo $recipe['id']; ?>" class="btn-danger">♥
+                            <a href="<?php echo BASE_URL; ?>/recipe/toggleFavorite?id=<?php echo $recipe['id']; ?>" class="btn-danger">♥
                                 Retirer des favoris</a>
                         </div>
                     </div>
