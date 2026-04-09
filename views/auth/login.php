@@ -57,7 +57,7 @@ $authController->handleLogin();
         Pas encore de compte ? <a href="register.php">Inscrivez-vous</a>
       </p>
       <p class="auth-link" style="margin-top: 0.5rem;">
-        <a href="home.php">&larr; Retour l'accueil</a>
+        <a href="../../views/recipes/home.php">&larr; Retour l'accueil</a>
       </p>
     </div>
   </div>
