@@ -461,3 +461,13 @@ body {
 .hidden {
   display: none;
 }
+.search-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.search-form .form-input {
+  flex: 1;
+}

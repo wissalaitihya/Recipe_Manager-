@@ -13,8 +13,8 @@ $categories = $categoryModel->getCategories();
 
 $recipeModel = new Recette_model();
 $filter_category = isset($_GET['category']) ? $_GET['category'] : null;
-
-$recipes = $recipeModel->getRecipesByUser($_SESSION['user_id'], $filter_category);
+$search = isset($_GET["search"]) ? $_GET["search"] : null;
+$recipes = $recipeModel->getRecipesByUser($_SESSION['user_id'], $filter_category, $search);
 $user_name = $_SESSION['user_name'] ?? 'Utilisateur';
 ?>
 <!DOCTYPE html>
@@ -34,7 +34,8 @@ $user_name = $_SESSION['user_name'] ?? 'Utilisateur';
             <div class="logo">Marrakech Food Lovers</div>
             <div class="user-info">
                 <span class="user-name"><?php echo htmlspecialchars($user_name); ?></span>
-                <a href="../auth/logout.php" class="btn btn-ghost btn-sm">Deconnexion</a>
+                <a href="../../controllers/AuthController.php?action=logout"
+                    class="btn btn-ghost btn-sm">Deconnexion</a>
             </div>
         </header>
 
@@ -47,7 +48,22 @@ $user_name = $_SESSION['user_name'] ?? 'Utilisateur';
                     + Nouvelle Recette
                 </button>
             </div>
-
+            <!--search  bar -->
+            <div>
+                <form method="GET" action="dashboard.php" class="search-form">
+                    <?php if ($filter_category): ?>
+                        <input type="hidden" name="category" value="<?php echo htmlspecialchars($filter_category); ?>">
+                    <?php endif; ?>
+                    <input type="text" name="search" class="form-input"
+                        placeholder="Rechercher par titre ou ingredient..."
+                        value="<?php echo htmlspecialchars($search ?? ''); ?>">
+                    <button type="submit" class="btn btn-primary">Rechercher</button>
+                    <?php if ($search): ?>
+                        <a href="dashboard.php<?php echo $filter_category ? '?category=' . $filter_category : ''; ?>"
+                            class="btn btn-ghost">Effacer</a>
+                    <?php endif; ?>
+                </form>
+            </div>
             <!-- Category Filter -->
             <div class="category-filter">
                 <a href="dashboard.php" class="category-btn <?php echo !$filter_category ? 'active' : ''; ?>">
@@ -76,10 +92,10 @@ $user_name = $_SESSION['user_name'] ?? 'Utilisateur';
                                 <span class="recipe-category"><?php echo htmlspecialchars($recipe['category_name']); ?></span>
                             </div>
                             <div class="recipe-meta">
-                                <span><?php echo $recipe['prep_time']; ?> min</span>
-                                <span><?php echo $recipe['portions']; ?> portions</span>
+                                <span><?php echo htmlspecialchars($recipe['temp_de_production']); ?></span>
+                                <span><?php echo htmlspecialchars($recipe['portions']); ?> portions</span>
                             </div>
-                            <p class="recipe-description"><?php echo htmlspecialchars($recipe['description']); ?></p>
+                            <p class="recipe-description"><?php echo htmlspecialchars($recipe['ingredient'] ?? ''); ?></p>
                             <div class="recipe-actions">
                                 <button class="btn btn-secondary btn-sm"
                                     onclick="openModal('edit', <?php echo htmlspecialchars(json_encode($recipe)); ?>)">
@@ -161,7 +177,8 @@ $user_name = $_SESSION['user_name'] ?? 'Utilisateur';
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="closeModal()">Annuler</button>
-                <form action="recipes/delete.php" method="POST" style="display: inline;">
+                <form action="../../controllers/RecipeController.php" method="POST" style="display: inline;">
+                    <input type="hidden" name="action" value="delete">
                     <input type="hidden" name="id" id="deleteRecipeId">
                     <button type="submit" class="btn btn-destructive">Supprimer</button>
                 </form>
@@ -182,11 +199,10 @@ $user_name = $_SESSION['user_name'] ?? 'Utilisateur';
                     title.textContent = 'Modifier la Recette';
                     document.getElementById('recipeId').value = data.id;
                     document.getElementById('title').value = data.title;
-                    document.getElementById('category').value = data.category_id;
-                    document.getElementById('prep_time').value = data.prep_time;
+                    document.getElementById('category').value = data.categories_id;
+                    document.getElementById('prep_time').value = data.temp_de_production;
                     document.getElementById('portions').value = data.portions;
-                    document.getElementById('description').value = data.description || '';
-                    document.getElementById('ingredients').value = data.ingredients || '';
+                    document.getElementById('ingredients').value = data.ingredient || '';
                     document.getElementById('instructions').value = data.instructions || '';
                 } else {
                     title.textContent = 'Nouvelle Recette';

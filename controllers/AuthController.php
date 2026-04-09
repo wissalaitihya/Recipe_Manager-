@@ -59,7 +59,17 @@ class AuthController
         session_start();
         session_unset();
         session_destroy();
-        header("Location: ../auth/login.php");
+        header("Location: ../views/auth/login.php");
         exit();
     }
+}
+
+// Handle action routing
+$action = $_GET['action'] ?? $_POST['action'] ?? null;
+$controller = new AuthController();
+
+switch ($action) {
+    case 'logout':
+        $controller->handleLogout();
+        break;
 }

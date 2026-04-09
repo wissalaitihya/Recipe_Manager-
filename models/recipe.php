@@ -1,6 +1,6 @@
 <?php
 
-include "../config/db.php";
+require_once __DIR__ . '/../config/db.php';
 
 class Recette_model
 {
@@ -40,7 +40,7 @@ class Recette_model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getRecipesByUser($user_id, $category_id = null)
+    public function getRecipesByUser($user_id, $category_id = null, $search = null)
     {
         $sql = "SELECT r.*, c.name as category_name 
                 FROM recette r 
@@ -52,11 +52,30 @@ class Recette_model
             $sql .= " AND r.categories_id = ?";
             $params[] = $category_id;
         }
-
+        if ($search) {
+        $sql .= " AND (r.title LIKE ? OR r.ingredient LIKE ?)";
+        $params[] = '%' . $search . '%';
+        $params[] = '%' . $search . '%';
+    }
         $sql .= " ORDER BY r.create_time DESC";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+     public function update_recette($id, $users_id, $title, $categories_id, $temp_de_production, $ingredient, $instructions, $portions)
+     {
+        $sql = "UPDATE recette SET title = ?, categories_id = ?, temp_de_production = ?, ingredient = ?, instructions = ?, portions = ? 
+                WHERE id = ? AND users_id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([$title, $categories_id, $temp_de_production, $ingredient, $instructions, $portions, $id, $users_id]);
+     }
+
+    public function delete_recette($users_id, $id)
+    {
+        $sql = "DELETE FROM recette WHERE users_id = ? AND id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([$users_id, $id]);
     }
 }
