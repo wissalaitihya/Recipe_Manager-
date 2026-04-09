@@ -20,13 +20,13 @@ class RecipeController
     {
         session_start();
         if (!isset($_SESSION['user_id'])) {
-            header("Location: " . BASE_URL . "/auth/login");
+            header("Location: ../views/auth/login.php");
             exit();
         }
         $user_id = $_SESSION['user_id'];
         $recette_id = $_GET['id'] ?? null;
         if (!$recette_id) {
-            header("Location: " . BASE_URL . "/recipe/dashboard");
+            header("Location: ../views/recipes/dashboard.php");
             exit();
         }
         require_once __DIR__ . '/../models/favorites.php';
@@ -34,10 +34,10 @@ class RecipeController
 
         if ($favoriteModel->isFavorite($user_id, $recette_id)) {
             $favoriteModel->removeFavorite($user_id, $recette_id);
-            header("Location: " . BASE_URL . "/recipe/favorites");
+            header("Location: ../views/recipes/favorites.php");
         } else {
             $favoriteModel->addFavorite($user_id, $recette_id);
-            header("Location: " . BASE_URL . "/recipe/dashboard");
+            header("Location: ../views/recipes/dashboard.php");
         }
         exit();
     }
@@ -57,7 +57,7 @@ class RecipeController
         session_start();
         $users_id = $_SESSION['user_id'] ?? null;
         if (!$users_id) {
-            header("Location: " . BASE_URL . "/auth/login");
+            header("Location: ../views/auth/login.php");
             exit();
         }
 
@@ -79,7 +79,7 @@ class RecipeController
                     $_SESSION['success'] = "Recette modifiée avec succès!";
                 }
             }
-            header("Location: " . BASE_URL . "/recipe/dashboard");
+            header("Location: ../views/recipes/dashboard.php");
             exit();
         }
     }
@@ -89,7 +89,7 @@ class RecipeController
         session_start();
         $users_id = $_SESSION['user_id'] ?? null;
         if (!$users_id) {
-            header("Location: " . BASE_URL . "/auth/login");
+            header("Location: ../views/auth/login.php");
             exit();
         }
 
@@ -99,7 +99,7 @@ class RecipeController
                 $this->recipeModel->delete_recette($users_id, $id);
                 $_SESSION['success'] = "Recette supprimée avec succès!";
             }
-            header("Location: " . BASE_URL . "/recipe/dashboard");
+            header("Location: ../views/recipes/dashboard.php");
             exit();
         }
     }
@@ -114,4 +114,24 @@ class RecipeController
     {
         return $this->recipeModel->update_recette($id, $users_id, $title, $categories_id, $temp_de_production, $ingredient, $instructions, $portions);
     }
+
+    public function handleRequest()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $action = $_POST['action'] ?? '';
+            if ($action === 'delete') {
+                $this->delete();
+            } else {
+                $this->save();
+            }
+        }
+    }
+}
+
+// classic way handling
+$recipeController = new RecipeController();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $recipeController->handleRequest();
+} elseif (isset($_GET['action']) && $_GET['action'] === 'toggleFavorite') {
+    $recipeController->toggleFavorite();
 }

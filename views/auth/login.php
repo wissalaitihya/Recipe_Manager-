@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Connexion - Marrakech Food Lovers</title>
-  <link rel="stylesheet" href="<?php echo BASE_URL; ?>/../views/css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
@@ -31,7 +31,7 @@
         </div>
       <?php endif; ?>
 
-      <form action="<?php echo BASE_URL; ?>/auth/handleLogin" method="POST">
+      <form action="../../controllers/AuthController.php?action=login" method="POST">
         <div class="form-group">
           <label class="form-label" for="email">Email</label>
           <input type="email" id="email" name="email" class="form-input" placeholder="votre@email.com" required>
@@ -49,10 +49,10 @@
       </form>
 
       <p class="auth-link">
-        Pas encore de compte ? <a href="<?php echo BASE_URL; ?>/auth/register">Inscrivez-vous</a>
+        Pas encore de compte ? <a href="register.php">Inscrivez-vous</a>
       </p>
       <p class="auth-link" style="margin-top: 0.5rem;">
-        <a href="<?php echo BASE_URL; ?>/recipe/home">&larr; Retour l'accueil</a>
+        <a href="../recipes/home.php">&larr; Retour l'accueil</a>
       </p>
     </div>
   </div>

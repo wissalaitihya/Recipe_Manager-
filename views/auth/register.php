@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inscription - Marrakech Food Lovers</title>
-  <link rel="stylesheet" href="<?php echo BASE_URL; ?>/../views/css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
   <div class="auth-container">
@@ -21,7 +21,7 @@
         </div>
       <?php endif; ?>
 
-      <form action="<?php echo BASE_URL; ?>/auth/handleRegister" method="POST">
+      <form action="../../controllers/AuthController.php?action=register" method="POST">
         <div class="form-group">
           <label class="form-label" for="name">Nom complet</label>
           <input 
@@ -78,7 +78,7 @@
       </form>
 
       <p class="auth-link">
-        Deja un compte ? <a href="<?php echo BASE_URL; ?>/auth/login">Connectez-vous</a>
+        Deja un compte ? <a href="login.php">Connectez-vous</a>
       </p>
     </div>
   </div>
