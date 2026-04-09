@@ -27,10 +27,10 @@ class AuthController
                 session_start();
                 $_SESSION['user_id'] = $user->getId();
                 $_SESSION['user_name'] = $user->getUsername();
-                header("Location: " . BASE_URL . "/recipe/dashboard");
+                header("Location: ../views/recipes/dashboard.php");
                 exit();
             } else {
-                header("Location: " . BASE_URL . "/auth/login?error=Identifiants+incorrects");
+                header("Location: ../views/auth/login.php?error=Identifiants+incorrects");
                 exit();
             }
         }
@@ -45,7 +45,7 @@ class AuthController
             $password_confirm = $_POST['password_confirm'] ?? '';
 
             if ($password !== $password_confirm) {
-                header("Location: " . BASE_URL . "/auth/register?error=Les+mots+de+passe+ne+correspondent+pas");
+                header("Location: ../views/auth/register.php?error=Les+mots+de+passe+ne+correspondent+pas");
                 exit();
             }
 
@@ -55,10 +55,10 @@ class AuthController
             $user->setPassword($password);
 
             if ($user->register()) {
-                header("Location: " . BASE_URL . "/auth/login?success=Inscription+reussie.+Veuillez+vous+connecter.");
+                header("Location: ../views/auth/login.php?success=Inscription+reussie.+Veuillez+vous+connecter.");
                 exit();
             } else {
-                header("Location: " . BASE_URL . "/auth/register?error=Email+deja+utilise+ou+erreur");
+                header("Location: ../views/auth/register.php?error=Email+deja+utilise+ou+erreur");
                 exit();
             }
         }
@@ -69,7 +69,20 @@ class AuthController
         session_start();
         session_unset();
         session_destroy();
-        header("Location: " . BASE_URL . "/auth/login");
+        header("Location: ../views/auth/login.php");
         exit();
+    }
+}
+
+// classic way handling
+$authController = new AuthController();
+if (isset($_GET['action'])) {
+    $action = $_GET['action'];
+    if ($action === 'login') {
+        $authController->handleLogin();
+    } elseif ($action === 'register') {
+        $authController->handleRegister();
+    } elseif ($action === 'logout') {
+        $authController->handleLogout();
     }
 }
