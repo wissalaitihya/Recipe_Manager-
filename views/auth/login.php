@@ -1,8 +1,3 @@
-<?php
-require_once __DIR__ . '/../../controllers/AuthController.php';
-$authController = new AuthController();
-$authController->handleLogin();
-?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -10,7 +5,7 @@ $authController->handleLogin();
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Connexion - Marrakech Food Lovers</title>
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>/../views/css/style.css">
 </head>
 
 <body>
@@ -36,7 +31,7 @@ $authController->handleLogin();
         </div>
       <?php endif; ?>
 
-      <form action="login.php" method="POST">
+      <form action="<?php echo BASE_URL; ?>/auth/handleLogin" method="POST">
         <div class="form-group">
           <label class="form-label" for="email">Email</label>
           <input type="email" id="email" name="email" class="form-input" placeholder="votre@email.com" required>
@@ -54,10 +49,10 @@ $authController->handleLogin();
       </form>
 
       <p class="auth-link">
-        Pas encore de compte ? <a href="register.php">Inscrivez-vous</a>
+        Pas encore de compte ? <a href="<?php echo BASE_URL; ?>/auth/register">Inscrivez-vous</a>
       </p>
       <p class="auth-link" style="margin-top: 0.5rem;">
-        <a href="../../views/recipes/home.php">&larr; Retour l'accueil</a>
+        <a href="<?php echo BASE_URL; ?>/recipe/home">&larr; Retour l'accueil</a>
       </p>
     </div>
   </div>

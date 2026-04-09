@@ -1,4 +1,6 @@
 <?php
+define('BASE_URL', '/Recipe_Manager/public/');
+
 require_once __DIR__ . '/../../models/category.php';
 require_once __DIR__ . '/../../models/recipe.php';
 
@@ -605,16 +607,16 @@ $filtered_recipes = $recipeModel->getAllRecipes($filter_category);
 
   <!-- HEADER -->
   <header>
-    <a href="home.php" class="logo-wrap">
+    <a href="<?php echo BASE_URL; ?>?url=recipe/home" class="logo-wrap">
       <div class="logo-icon">🍳</div>
       <span class="logo-text">Matbakhi</span>
     </a>
     <nav class="nav">
       <?php if ($is_logged_in): ?>
-        <a href="dashboard.php" class="btn-primary">Mon Espace</a>
+        <a href="<?php echo BASE_URL; ?>?url=recipe/dashboard" class="btn-primary">Mon Espace</a>
       <?php else: ?>
-        <a href="../auth/login.php" class="nav-link">Se Connecter</a>
-        <a href="../auth/register.php" class="btn-primary">Rejoindre</a>
+        <a href="<?php echo BASE_URL; ?>?url=auth/login" class="nav-link">Se Connecter</a>
+        <a href="<?php echo BASE_URL; ?>?url=auth/register" class="btn-primary">Rejoindre</a>
       <?php endif; ?>
     </nav>
   </header>
@@ -629,9 +631,9 @@ $filtered_recipes = $recipeModel->getAllRecipes($filter_category);
           partager avec les générations futures.</p>
         <div class="hero-ctas">
           <?php if ($is_logged_in): ?>
-            <a href="dashboard.php" class="btn-primary">Mon Espace →</a>
+            <a href="<?php echo BASE_URL; ?>?url=recipe/dashboard" class="btn-primary">Mon Espace →</a>
           <?php else: ?>
-            <a href="../auth/register.php" class="btn-primary">Rejoindre la Communauté →</a>
+            <a href="<?php echo BASE_URL; ?>?url=auth/register" class="btn-primary">Rejoindre la Communauté →</a>
             <a href="#menu" class="btn-outline">Explorer les recettes</a>
           <?php endif; ?>
         </div>
@@ -695,9 +697,10 @@ $filtered_recipes = $recipeModel->getAllRecipes($filter_category);
     <!-- Category filter -->
     <div class="filter-section" style="padding-left:0;padding-right:0;">
       <div class="category-filter">
-        <a href="home.php#menu" class="category-btn <?php echo !$filter_category ? 'active' : ''; ?>">Toutes</a>
+        <a href="<?php echo BASE_URL; ?>?url=recipe/home#menu"
+          class="category-btn <?php echo !$filter_category ? 'active' : ''; ?>">Toutes</a>
         <?php foreach ($categories as $cat): ?>
-          <a href="home.php?category=<?php echo $cat['id']; ?>#menu"
+          <a href="<?php echo BASE_URL; ?>?url=recipe/home&category=<?php echo $cat['id']; ?>#menu"
             class="category-btn <?php echo $filter_category === (int) $cat['id'] ? 'active' : ''; ?>">
             <?php echo htmlspecialchars($cat['name']); ?>
           </a>
@@ -731,7 +734,7 @@ $filtered_recipes = $recipeModel->getAllRecipes($filter_category);
   <section class="cta-banner">
     <h2>Prêt à préserver vos recettes?</h2>
     <p>Rejoignez des centaines de familles qui digitalisent leur héritage culinaire</p>
-    <a href="../auth/register.php" class="btn-white">Commencer gratuitement →</a>
+    <a href="<?php echo BASE_URL; ?>?url=auth/register" class="btn-white">Commencer gratuitement →</a>
   </section>
 
   <footer>
