@@ -5,12 +5,14 @@ $authController->handleLogin();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Connexion - Marrakech Food Lovers</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
   <div class="auth-container">
     <div class="card auth-card">
@@ -26,10 +28,10 @@ $authController->handleLogin();
           <?php unset($_SESSION['error']); ?>
         </div>
       <?php endif; ?>
-      
+
       <?php if (isset($_SESSION['success'])): ?>
         <div class="alert alert-success">
-          <?php echo htmlspecialchars($_SESSION['success']); ?> 
+          <?php echo htmlspecialchars($_SESSION['success']); ?>
           <?php unset($_SESSION['success']); ?>
         </div>
       <?php endif; ?>
@@ -37,26 +39,13 @@ $authController->handleLogin();
       <form action="login.php" method="POST">
         <div class="form-group">
           <label class="form-label" for="email">Email</label>
-          <input 
-            type="email" 
-            id="email" 
-            name="email" 
-            class="form-input" 
-            placeholder="votre@email.com"
-            required
-          >
+          <input type="email" id="email" name="email" class="form-input" placeholder="votre@email.com" required>
         </div>
 
         <div class="form-group">
           <label class="form-label" for="password">Mot de passe</label>
-          <input 
-            type="password" 
-            id="password" 
-            name="password" 
-            class="form-input" 
-            placeholder="Votre mot de passe"
-            required
-          >
+          <input type="password" id="password" name="password" class="form-input" placeholder="Votre mot de passe"
+            required>
         </div>
 
         <button type="submit" class="btn btn-primary" style="width: 100%;">
@@ -68,9 +57,10 @@ $authController->handleLogin();
         Pas encore de compte ? <a href="register.php">Inscrivez-vous</a>
       </p>
       <p class="auth-link" style="margin-top: 0.5rem;">
-        <a href="home.php">&larr; Retour  l'accueil</a>
+        <a href="home.php">&larr; Retour l'accueil</a>
       </p>
     </div>
   </div>
 </body>
+
 </html>

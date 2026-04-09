@@ -61,3 +61,11 @@ VALUES
  'Oranges, sucre',
  'Presser les oranges et ajouter du sucre',
  '3 verres');
+
+CREATE TABLE favorites (
+    user_id INT,
+    recette_id INT,
+    PRIMARY KEY (user_id, recette_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (recette_id) REFERENCES recette(id) ON DELETE CASCADE
+);
