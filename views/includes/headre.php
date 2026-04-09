@@ -10,7 +10,7 @@ $favoriteModel = new Favorite_model();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/../views/css/style.css">
 </head>
 <body>
     <div class="container">
@@ -18,8 +18,8 @@ $favoriteModel = new Favorite_model();
             <div class="logo">Marrakech Food Lovers</div>
             <div class="user-info">
                 <span class="user-name"><?php echo htmlspecialchars($user_name); ?></span>
-                <a href="favorites.php" class="btn btn-ghost btn-sm">❤️ Mes Favoris</a>
-                <a href="../../controllers/AuthController.php?action=logout"
+                <a href="<?php echo BASE_URL; ?>/recipe/favorites" class="btn btn-ghost btn-sm">❤️ Mes Favoris</a>
+                <a href="<?php echo BASE_URL; ?>/auth/handleLogout"
                     class="btn btn-ghost btn-sm">Deconnexion</a>
             </div>
         </header>
