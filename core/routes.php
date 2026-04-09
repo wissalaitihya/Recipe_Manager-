@@ -37,4 +37,4 @@ class Router {
         // Call method with params
         call_user_func_array([$controller, $method], $params);
     }
-}
+}   

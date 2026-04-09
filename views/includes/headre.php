@@ -18,8 +18,9 @@ $favoriteModel = new Favorite_model();
             <div class="logo">Marrakech Food Lovers</div>
             <div class="user-info">
                 <span class="user-name"><?php echo htmlspecialchars($user_name); ?></span>
-                <a href="<?php echo BASE_URL; ?>/recipe/favorites" class="btn btn-ghost btn-sm">❤️ Mes Favoris</a>
-                <a href="<?php echo BASE_URL; ?>/auth/handleLogout"
+                <a href="favorites.php" class="btn btn-ghost btn-sm">❤️ Mes Favoris</a>
+                <a href="home.php" class="btn btn-ghost btn-sm">Home</a>
+                <a href="../../controllers/AuthController.php?action=logout"
                     class="btn btn-ghost btn-sm">Deconnexion</a>
             </div>
         </header>
