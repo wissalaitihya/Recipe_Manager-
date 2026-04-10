@@ -27,6 +27,7 @@ Model	Business logic + Database access (PDO)
 Controller	Request handling + data orchestration
 View	Display only (no SQL, no logic)
 ## 🗂️ Project Structure (MVC)
+```
 recipe-manager/
 │
 ├── app/
@@ -40,7 +41,9 @@ recipe-manager/
 ├── public/
 │   ├── index.php
 │   └── .htaccess
+```
 ## 🧩 Features (User Stories)
+
 ID	Feature
 US1	User Registration
 US2	User Login
