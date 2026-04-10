@@ -98,7 +98,6 @@ Relationships
 One User → Many Recipes (1-N)
 One Category → Many Recipes (1-N)
 Many Users ↔ Many Recipes (Favorites)
-
 MCD and MLD diagrams are included in this repository.
 
 ## 🔐 Security Practices
@@ -108,33 +107,6 @@ password_hash() / password_verify()
 Strict form validation
 Foreign Keys for referential integrity
 
-## ▶️ Installation
-
-Clone repository into:
-/opt/lampp/htdocs/
-Import the SQL file into phpMyAdmin
-Start XAMPP
-Open:
-```
-http://localhost/recipe-manager/public/
-```
-## 🔗 Routing
-
-All routes defined in:
-```
-app/core/routes.php
-```
-Example:
-```
-$router->add('', 'HomeController@index');
-$router->add('recipes', 'RecipeController@index');
-$router->add('recipes/show', 'RecipeController@show');
-```
-
-Links in views use:
-```
-<a href="<?= BASE_URL ?>/recipes/show/<?= $id ?>">
-```
 ## 🧪 SQL Deliverable
 
 Full schema creation script
@@ -151,6 +123,11 @@ Pair programming
 Retrospective completed
 
 Screenshot of the final board included.
+
+<img width="1361" height="768" alt="Screenshot From 2026-04-10 09-10-18" src="https://github.com/user-attachments/assets/eb09dfea-7224-4c23-9147-cc3ca97347d4" />
+
+<img width="1361" height="768" alt="Screenshot From 2026-04-10 09-13-12" src="https://github.com/user-attachments/assets/8e98df4a-8a05-42b8-9a31-c8d065cdba87" />
+
 
 ## 🧑‍💻 Code Review Readiness
 
