@@ -1,4 +1,4 @@
-##🍲 Recipe Manager — MVC PHP From Scratch
+## 🍲 Recipe Manager — MVC PHP From Scratch
 
 Client: DigitalBite Agency
 Product Owner: Marrakech Food Lovers
