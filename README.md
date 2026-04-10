@@ -29,9 +29,7 @@ View	Display only (no SQL, no logic)
 ## 🗂️ Project Structure (MVC)
 ```
 recipe-manager/
-│
-├── app/
-│   ├── controllers/
+├── controllers/
 │   ├── models/
 │   ├── views/
 │   └── core/
