@@ -41,8 +41,6 @@ recipe-manager/
 │   ├── FavController.php
 │   └── RecipeController.php
 │
-├── core/
-│
 ├── models/
 │   ├── category.php
 │   ├── favorites.php
