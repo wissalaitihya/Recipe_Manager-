@@ -69,16 +69,54 @@ recipe-manager/
 ```
 
 ## 🧩 Features (User Stories)
-
+```
 ID	Feature
+```
+```
 US1	User Registration
+```
+<img width="1920" height="1200" alt="Capture d’écran (11)" src="https://github.com/user-attachments/assets/ba77e726-7dbd-418a-bb13-312bfdd4e6b7" />
+
+```
 US2	User Login
+```
+<img width="1920" height="1200" alt="Capture d’écran (10)" src="https://github.com/user-attachments/assets/175b079c-7a75-454f-82d5-55b048403281" />
+
+```
 US3	Display my recipes
+```
+<img width="1920" height="1200" alt="Capture d’écran (7)" src="https://github.com/user-attachments/assets/3ef41542-eb83-485e-934c-68f139f40beb" />
+
+```
 US4	Create a recipe
+```
+<img width="1920" height="1200" alt="Capture d’écran (12)" src="https://github.com/user-attachments/assets/31e64b87-e30b-4ddf-bf08-cdf850fa1e25" />
+
+```
 US5	Edit a recipe
+```
+```
 US6	Delete a recipe
+```
+```
 US7	Recipe categories
+```
+
+```
 US8	Filter recipes by category
+```
+<img width="1920" height="1200" alt="Capture d’écran (8)" src="https://github.com/user-attachments/assets/642dd402-d406-47e4-b5eb-56afd0464667" />
+```
+Mes Favoris Page:
+```
+<img width="1920" height="1200" alt="Capture d’écran (9)" src="https://github.com/user-attachments/assets/ff2f22ab-f5fd-444c-af52-2ec6be64dc60" />
+```
+Home Page:
+```
+<img width="1920" height="1200" alt="Capture d’écran (4)" src="https://github.com/user-attachments/assets/582be35d-ff7f-4dde-afc2-abebc7902289" />
+<img width="1920" height="1200" alt="Capture d’écran (5)" src="https://github.com/user-attachments/assets/2c865598-fc30-41b8-b683-bbd94e5c71c5" />
+<img width="1920" height="1200" alt="Capture d’écran (6)" src="https://github.com/user-attachments/assets/a89f3f84-2570-49dc-ad70-bc38d00ce897" />
+```
 
 ## ⭐ Bonus	Favorites recipes
 
@@ -86,6 +124,7 @@ US8	Filter recipes by category
 - Recettes Favorites : Permettre à un utilisateur de marquer des recettes comme "favorites".
 
 ## 🗃️ Database Design (Merise)
+<img width="1920" height="1200" alt="Capture d’écran (14)" src="https://github.com/user-attachments/assets/d528b19a-8e8e-47f4-8303-22c18f1d3f32" />
 
 Entities
 Users
