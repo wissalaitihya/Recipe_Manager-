@@ -25,7 +25,6 @@ body {
   min-height: 100vh;
 }
 
-/* Container */
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -37,9 +36,9 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 0;
+  /* padding: 1rem 0; */
   border-bottom: 1px solid var(--border);
-  margin-bottom: 2rem;
+  /* margin-bottom: 2rem; */
 }
 
 .logo {
@@ -461,6 +460,7 @@ body {
 .hidden {
   display: none;
 }
+
 .search-form {
   display: flex;
   gap: 0.5rem;
