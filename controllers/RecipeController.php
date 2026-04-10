@@ -70,12 +70,26 @@ class RecipeController
             $instructions = $_POST['instructions'] ?? '';
             $portions = $_POST['portions'] ?? '';
 
+            // Handle image upload
+            $imageName = null;
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
+                $uploadDir = __DIR__ . '/../uploads/';
+
+                if (!is_dir($uploadDir)) {
+                    mkdir($uploadDir, 0777, true);
+                }
+
+                $imageName = time() . '_' . basename($_FILES['image']['name']);
+                $targetPath = $uploadDir . $imageName;
+                move_uploaded_file($_FILES['image']['tmp_name'], $targetPath);
+            }
+
             if (!empty($title) && !empty($categories_id)) {
                 if (empty($id)) {
-                    $this->createRecipe($users_id, $title, $categories_id, $temp_de_production, $ingredient, $instructions, $portions);
+                    $this->createRecipe($users_id, $title, $categories_id, $temp_de_production, $ingredient, $instructions, $portions, $imageName);
                     $_SESSION['success'] = "Recette créée avec succès!";
                 } else {
-                    $this->updateRecipe($id, $users_id, $title, $categories_id, $temp_de_production, $ingredient, $instructions, $portions);
+                    $this->updateRecipe($id, $users_id, $title, $categories_id, $temp_de_production, $ingredient, $instructions, $portions, $imageName);
                     $_SESSION['success'] = "Recette modifiée avec succès!";
                 }
             }
@@ -105,14 +119,14 @@ class RecipeController
     }
 
     // Create a new recipe
-    public function createRecipe($users_id, $title, $categories_id, $temp_de_production, $ingredient, $instructions, $portions)
+    public function createRecipe($users_id, $title, $categories_id, $temp_de_production, $ingredient, $instructions, $portions, $image = null)
     {
-        return $this->recipeModel->create_recette($users_id, $title, $categories_id, $temp_de_production, $ingredient, $instructions, $portions);
+        return $this->recipeModel->create_recette($users_id, $title, $categories_id, $temp_de_production, $ingredient, $instructions, $portions, $image);
     }
 
-    public function updateRecipe($id, $users_id, $title, $categories_id, $temp_de_production, $ingredient, $instructions, $portions)
+    public function updateRecipe($id, $users_id, $title, $categories_id, $temp_de_production, $ingredient, $instructions, $portions, $image = null)
     {
-        return $this->recipeModel->update_recette($id, $users_id, $title, $categories_id, $temp_de_production, $ingredient, $instructions, $portions);
+        return $this->recipeModel->update_recette($id, $users_id, $title, $categories_id, $temp_de_production, $ingredient, $instructions, $portions, $image);
     }
 
     public function handleRequest()

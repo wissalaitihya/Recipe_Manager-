@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $recette_id = isset($_GET['id']) ? $_GET['id'] : null;
 if (!$recette_id) {
-    header("Location: ../views/recipes/dashboard.php");
+    header("Location: ../views/recipes/favorites.php");
     exit();
 }
 $favoriteModel = new Favorite_model();
@@ -22,7 +22,7 @@ if ($favoriteModel->isFavorite($user_id, $recette_id)) {
 } else {
     // not favorite add it
     $favoriteModel->addFavorite($user_id, $recette_id);
-    header("Location: ../views/recipes/dashboard.php");
+    header("Location: ../views/recipes/favorites.php");
 }
 
 

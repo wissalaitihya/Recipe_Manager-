@@ -87,6 +87,13 @@ $filtered_recipes = $recipeModel->getAllRecipes($filter_category);
       color: #fff;
     }
 
+    .logo-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: white;
+      stroke-width: 1.5;
+    }
+
     .logo-text {
       font-family: 'DM Sans', sans-serif;
       font-weight: 600;
@@ -608,7 +615,14 @@ $filtered_recipes = $recipeModel->getAllRecipes($filter_category);
   <!-- HEADER -->
   <header>
     <a href="home.php" class="logo-wrap">
-      <div class="logo-icon">🍳</div>
+      <div class="logo-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 13.87A4 4 0 0 1 7.41 6.64a2 2 0 0 1 3.09-2.5a2 2 0 0 1 3.09 2.5A4 4 0 0 1 18 13.87" />
+          <line x1="6" y1="17" x2="18" y2="17" />
+          <line x1="6" y1="13.87" x2="18" y2="13.87" />
+        </svg>
+      </div>
       <span class="logo-text">Matbakhi</span>
     </a>
     <nav class="nav">
@@ -697,8 +711,7 @@ $filtered_recipes = $recipeModel->getAllRecipes($filter_category);
     <!-- Category filter -->
     <div class="filter-section" style="padding-left:0;padding-right:0;">
       <div class="category-filter">
-        <a href="home.php#menu"
-          class="category-btn <?php echo !$filter_category ? 'active' : ''; ?>">Toutes</a>
+        <a href="home.php#menu" class="category-btn <?php echo !$filter_category ? 'active' : ''; ?>">Toutes</a>
         <?php foreach ($categories as $cat): ?>
           <a href="home.php?category=<?php echo $cat['id']; ?>#menu"
             class="category-btn <?php echo $filter_category === (int) $cat['id'] ? 'active' : ''; ?>">
