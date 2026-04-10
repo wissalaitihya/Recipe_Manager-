@@ -20,6 +20,8 @@ $user_name = $_SESSION['user_name'] ?? 'Utilisateur';
 require_once __DIR__ . '/../../models/favorites.php';
 $favoriteModel = new Favorite_model();
 
+
+
 // Unsplash food photos — rotates through cards
 $food_photos = [
     'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80',
@@ -102,7 +104,7 @@ $food_photos = [
             display: flex;
             align-items: center;
             gap: .9rem;
-            padding: 1.5rem 1.35rem 1.35rem;
+            padding: 0.8rem 1rem 1rem;
             border-bottom: 1px solid var(--border);
         }
 
@@ -279,7 +281,7 @@ $food_photos = [
         /* MAIN */
         main {
             margin-left: var(--sidebar-w);
-            padding: calc(var(--topbar-h) + 1.75rem) 2.75rem 3.5rem;
+            padding: 0.5rem 1rem;
             min-height: 100vh;
         }
 
@@ -897,13 +899,13 @@ $food_photos = [
 
     <!-- MAIN -->
     <main>
-        <a href="home.php" class="back-link">
+        <!-- <a href="home.php" class="back-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="19" y1="12" x2="5" y2="12" />
                 <polyline points="12 19 5 12 12 5" />
             </svg>
             Retour
-        </a>
+        </a> -->
 
         <h1 class="pg-title">Toutes les Recettes</h1>
         <p class="pg-sub"><?= count($recipes) ?> recette<?= count($recipes) !== 1 ? 's' : '' ?>
@@ -959,7 +961,7 @@ $food_photos = [
                         <div class="card-img">
                             <img src="<?= $photo ?>" alt="<?= htmlspecialchars($recipe['title']) ?>" loading="lazy">
                             <span class="card-cat"><?= htmlspecialchars($recipe['category_name']) ?></span>
-                            <a href="../../controllers/RecipeController.php?action=toggleFavorite&id=<?= $recipe['id'] ?>"
+                            <a href="../../controllers/FavController.php?action=toggleFavoriteDash&id=<?= $recipe['id'] ?>"
                                 class="card-fav <?= $favoriteModel->isFavorite($_SESSION['user_id'], $recipe['id']) ? 'on' : '' ?>">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"
                                     stroke-linejoin="round">
