@@ -16,31 +16,6 @@ class RecipeController
         include __DIR__ . '/../views/recipes/favorites.php';
     }
 
-    public function toggleFavorite()
-    {
-        session_start();
-        if (!isset($_SESSION['user_id'])) {
-            header("Location: ../views/auth/login.php");
-            exit();
-        }
-        $user_id = $_SESSION['user_id'];
-        $recette_id = $_GET['id'] ?? null;
-        if (!$recette_id) {
-            header("Location: ../views/recipes/dashboard.php");
-            exit();
-        }
-        require_once __DIR__ . '/../models/favorites.php';
-        $favoriteModel = new Favorite_model();
-
-        if ($favoriteModel->isFavorite($user_id, $recette_id)) {
-            $favoriteModel->removeFavorite($user_id, $recette_id);
-            header("Location: ../views/recipes/favorites.php");
-        } else {
-            $favoriteModel->addFavorite($user_id, $recette_id);
-            header("Location: ../views/recipes/dashboard.php");
-        }
-        exit();
-    }
 
     public function dashboard()
     {
@@ -54,7 +29,6 @@ class RecipeController
 
     public function save()
     {
-        session_start();
         $users_id = $_SESSION['user_id'] ?? null;
         if (!$users_id) {
             header("Location: ../views/auth/login.php");

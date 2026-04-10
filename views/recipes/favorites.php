@@ -348,7 +348,7 @@ $user_name = $_SESSION['user_name'] ?? 'Utilisateur';
                             <?php echo htmlspecialchars(substr($recipe['ingredient'] ?? 'Recette du chef...', 0, 100)) . '...'; ?>
                         </p>
                         <div class="recipe-actions">
-                            <a href="../../controllers/RecipeController.php?action=toggleFavorite&id=<?php echo $recipe['id']; ?>" class="btn-danger">♥
+                            <a href="../../controllers/FavController.php?action=toggleFavoriteFav&id=<?php echo $recipe['id']; ?>" class="btn-danger">♥
                                 Retirer des favoris</a>
                         </div>
                     </div>
