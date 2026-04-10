@@ -69,3 +69,5 @@ CREATE TABLE favorites (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (recette_id) REFERENCES recette(id) ON DELETE CASCADE
 );
+
+ALTER TABLE recette ADD COLUMN image VARCHAR(255);

@@ -24,7 +24,4 @@ if ($favoriteModel->isFavorite($user_id, $recette_id)) {
     $favoriteModel->addFavorite($user_id, $recette_id);
     header("Location: ../views/recipes/favorites.php");
 }
-
-
-
 ?>

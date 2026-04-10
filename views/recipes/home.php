@@ -728,7 +728,11 @@ $filtered_recipes = $recipeModel->getAllRecipes($filter_category);
         <?php foreach ($filtered_recipes as $recipe): ?>
           <div class="recipe-card"
             onclick='openRecipeDetail(<?php echo json_encode($recipe, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>)'>
-            <div class="recipe-thumb-placeholder">🍲</div>
+            <?php if (!empty($recipe['image'])): ?>
+              <img src="../../uploads/<?= htmlspecialchars($recipe['image']) ?>" alt="<?= htmlspecialchars($recipe['title']) ?>" class="recipe-thumb">
+            <?php else: ?>
+              <div class="recipe-thumb-placeholder">🍲</div>
+            <?php endif; ?>
             <div class="recipe-body">
               <span class="recipe-category-badge"><?php echo htmlspecialchars($recipe['category_name']); ?></span>
               <div class="recipe-title"><?php echo htmlspecialchars($recipe['title']); ?></div>
