@@ -1,7 +1,7 @@
 ## 🍲 Recipe Manager — MVC PHP From Scratch
 
 Client: DigitalBite Agency
-Product Owner: Marrakech Food Lovers
+Product Owner: Matbakhi
 
 A custom PHP MVC web application that allows cooking enthusiasts to create, organize, and manage their personal recipes.
 
