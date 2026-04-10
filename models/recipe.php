@@ -11,13 +11,13 @@ class Recette_model
         $this->pdo = Database::getInstance()->getConnection();
     }
 
-    function create_recette($users_id, $title, $categories_id, $temp_de_production, $ingredient, $instructions, $portions)
+    function create_recette($users_id, $title, $categories_id, $temp_de_production, $ingredient, $instructions, $portions, $image = null)
     {
-        $sql = "INSERT INTO recette (users_id, categories_id, title, temp_de_production, ingredient, instructions, portions) 
-                VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO recette (users_id, categories_id, title, temp_de_production, ingredient, instructions, portions, image) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([$users_id, $categories_id, $title, $temp_de_production, $ingredient, $instructions, $portions]);
+        return $stmt->execute([$users_id, $categories_id, $title, $temp_de_production, $ingredient, $instructions, $portions, $image]);
     }
 
     public function getAllRecipes($category_id = null)
@@ -53,10 +53,10 @@ class Recette_model
             $params[] = $category_id;
         }
         if ($search) {
-        $sql .= " AND (r.title LIKE ? OR r.ingredient LIKE ?)";
-        $params[] = '%' . $search . '%';
-        $params[] = '%' . $search . '%';
-    }
+            $sql .= " AND (r.title LIKE ? OR r.ingredient LIKE ?)";
+            $params[] = '%' . $search . '%';
+            $params[] = '%' . $search . '%';
+        }
         $sql .= " ORDER BY r.create_time DESC";
 
         $stmt = $this->pdo->prepare($sql);
@@ -64,13 +64,20 @@ class Recette_model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-     public function update_recette($id, $users_id, $title, $categories_id, $temp_de_production, $ingredient, $instructions, $portions)
-     {
-        $sql = "UPDATE recette SET title = ?, categories_id = ?, temp_de_production = ?, ingredient = ?, instructions = ?, portions = ? 
-                WHERE id = ? AND users_id = ?";
-        $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([$title, $categories_id, $temp_de_production, $ingredient, $instructions, $portions, $id, $users_id]);
-     }
+    public function update_recette($id, $users_id, $title, $categories_id, $temp_de_production, $ingredient, $instructions, $portions, $image = null)
+    {
+        if ($image) {
+            $sql = "UPDATE recette SET title = ?, categories_id = ?, temp_de_production = ?, ingredient = ?, instructions = ?, portions = ?, image = ? 
+                    WHERE id = ? AND users_id = ?";
+            $stmt = $this->pdo->prepare($sql);
+            return $stmt->execute([$title, $categories_id, $temp_de_production, $ingredient, $instructions, $portions, $image, $id, $users_id]);
+        } else {
+            $sql = "UPDATE recette SET title = ?, categories_id = ?, temp_de_production = ?, ingredient = ?, instructions = ?, portions = ? 
+                    WHERE id = ? AND users_id = ?";
+            $stmt = $this->pdo->prepare($sql);
+            return $stmt->execute([$title, $categories_id, $temp_de_production, $ingredient, $instructions, $portions, $id, $users_id]);
+        }
+    }
 
     public function delete_recette($users_id, $id)
     {
