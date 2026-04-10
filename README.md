@@ -40,7 +40,7 @@ recipe-manager/
 │   ├── AuthController.php
 │   ├── FavController.php
 │   └── RecipeController.php
-│
+|
 ├── models/
 │   ├── category.php
 │   ├── favorites.php
@@ -121,11 +121,6 @@ Pair programming
 Retrospective completed
 
 Screenshot of the final board included.
-
-<img width="1361" height="768" alt="Screenshot From 2026-04-10 09-10-18" src="https://github.com/user-attachments/assets/eb09dfea-7224-4c23-9147-cc3ca97347d4" />
-
-<img width="1361" height="768" alt="Screenshot From 2026-04-10 09-13-12" src="https://github.com/user-attachments/assets/8e98df4a-8a05-42b8-9a31-c8d065cdba87" />
-
 
 ## 🧑‍💻 Code Review Readiness
 
