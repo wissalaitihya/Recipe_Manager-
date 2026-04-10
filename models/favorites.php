@@ -30,7 +30,7 @@ class Favorite_model
     }
     public function getFavorite($user_id)
     {
-        $sql = "SELECT r.* FROM favorites f JOIN recette r ON f.recette_id = r.id WHERE f.user_id = ?";
+        $sql = "SELECT r.*, c.name as category_name FROM favorites f JOIN recette r ON f.recette_id = r.id LEFT JOIN categories c ON r.categories_id = c.id WHERE f.user_id = ?";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$user_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

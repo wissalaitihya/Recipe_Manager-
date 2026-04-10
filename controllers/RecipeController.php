@@ -114,12 +114,36 @@ class RecipeController
             }
         }
     }
+    public function toggleFavorite()
+    {
+        require_once __DIR__ . '/../models/favorites.php';
+        $favoriteModel = new Favorite_model();
+
+        $user_id = $_SESSION['user_id'] ?? null;
+        $recipe_id = $_GET['id'] ?? null;
+
+        if ($user_id && $recipe_id) {
+            if ($favoriteModel->isFavorite($user_id, $recipe_id)) {
+                $favoriteModel->removeFavorite($user_id, $recipe_id);
+            } else {
+                $favoriteModel->addFavorite($user_id, $recipe_id);
+            }
+        }
+
+        header("Location: " . ($_GET['redirect'] ?? '../views/recipes/favorites.php'));
+        exit();
+    }
 }
 
-// classic way handling
-$recipeController = new RecipeController();
+// Handle requests
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $recipeController = new RecipeController();
     $recipeController->handleRequest();
 } elseif (isset($_GET['action']) && $_GET['action'] === 'toggleFavorite') {
+    $recipeController = new RecipeController();
     $recipeController->toggleFavorite();
 }
